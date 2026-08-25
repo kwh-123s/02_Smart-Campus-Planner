@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Campus Planner</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <h1>Smart Campus Planner</h1>
+      <p class="subtitle">학과 · 동아리 · 개인 할 일을 한곳에서 관리하세요</p>
+    </header>
+
+    <form id="todo-form" class="todo-form">
+      <input
+        type="text"
+        id="todo-input"
+        class="todo-input"
+        placeholder="할 일을 입력하세요"
+        autocomplete="off"
+        required
+      />
+
+      <div class="todo-options">
+        <div class="field-group">
+          <label for="category-select">카테고리</label>
+          <select id="category-select" class="category-select">
+            <option value="학과">학과</option>
+            <option value="동아리">동아리</option>
+            <option value="개인">개인</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="priority-select">중요도</label>
+          <select id="priority-select" class="priority-select">
+            <option value="상">상</option>
+            <option value="중" selected>중</option>
+            <option value="하">하</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="todo-dates">
+        <div class="field-group">
+          <label for="start-date-input">시작일</label>
+          <input type="date" id="start-date-input" class="start-date-input" />
+        </div>
+
+        <div class="field-group">
+          <label for="due-date-input">마감일</label>
+          <input type="date" id="due-date-input" class="due-date-input" />
+        </div>
+      </div>
+
+      <button type="submit" class="add-btn">추가</button>
+    </form>
+
+    <section class="progress-section" aria-label="전체 완료율">
+      <div class="progress-info">
+        <span>전체 완료율</span>
+        <span id="progress-percent">0%</span>
+      </div>
+      <div class="progress-bar-track">
+        <div id="progress-bar-fill" class="progress-bar-fill"></div>
+      </div>
+      <p id="progress-count" class="progress-count">완료 0 / 전체 0</p>
+    </section>
+
+    <ul id="todo-list" class="todo-list">
+      <!-- 할 일 항목이 여기에 자바스크립트로 추가됩니다 -->
+    </ul>
+
+    <p id="empty-message" class="empty-message">아직 등록된 할 일이 없습니다.</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
