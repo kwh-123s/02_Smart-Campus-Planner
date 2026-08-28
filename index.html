@@ -7,73 +7,245 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="app">
-    <header class="app-header">
-      <h1>Smart Campus Planner</h1>
-      <p class="subtitle">학과 · 동아리 · 개인 할 일을 한곳에서 관리하세요</p>
-    </header>
+  <div class="menu-wrapper">
+    <button
+      type="button"
+      id="menu-toggle-btn"
+      class="menu-toggle-btn"
+      aria-label="메뉴 열기"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
 
-    <form id="todo-form" class="todo-form">
-      <input
-        type="text"
-        id="todo-input"
-        class="todo-input"
-        placeholder="할 일을 입력하세요"
-        autocomplete="off"
-        required
-      />
+    <div id="menu-dropdown" class="menu-dropdown hidden" role="menu">
+      <button
+        type="button"
+        id="menu-option-calendar"
+        class="menu-option active"
+        data-view="calendar"
+        role="menuitem"
+      >
+        <span class="menu-option-icon" aria-hidden="true">📅</span>
+        캘린더
+      </button>
+      <button
+        type="button"
+        id="menu-option-memo"
+        class="menu-option"
+        data-view="memo"
+        role="menuitem"
+      >
+        <span class="menu-option-icon" aria-hidden="true">📝</span>
+        메모
+      </button>
+      <button
+        type="button"
+        id="menu-option-timetable"
+        class="menu-option"
+        data-view="timetable"
+        role="menuitem"
+      >
+        <span class="menu-option-icon" aria-hidden="true">🕒</span>
+        시간표
+      </button>
+    </div>
+  </div>
 
-      <div class="todo-options">
-        <div class="field-group">
-          <label for="category-select">카테고리</label>
-          <select id="category-select" class="category-select">
-            <option value="학과">학과</option>
-            <option value="동아리">동아리</option>
-            <option value="개인">개인</option>
-          </select>
+  <div id="calendar-view" class="view calendar-view">
+  <div class="layout">
+    <div class="app">
+      <header class="app-header">
+        <h1>Smart Campus Planner</h1>
+        <p class="subtitle">학과 · 동아리 · 개인 할 일을 한곳에서 관리하세요</p>
+      </header>
+
+      <form id="todo-form" class="todo-form">
+        <input
+          type="text"
+          id="todo-input"
+          class="todo-input"
+          placeholder="할 일을 입력하세요"
+          autocomplete="off"
+          required
+        />
+
+        <div class="todo-options">
+          <div class="field-group">
+            <label for="category-select">카테고리</label>
+            <select id="category-select" class="category-select">
+              <option value="학과">학과</option>
+              <option value="동아리">동아리</option>
+              <option value="개인">개인</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="priority-select">중요도</label>
+            <select id="priority-select" class="priority-select">
+              <option value="상">상</option>
+              <option value="중" selected>중</option>
+              <option value="하">하</option>
+            </select>
+          </div>
         </div>
 
-        <div class="field-group">
-          <label for="priority-select">중요도</label>
-          <select id="priority-select" class="priority-select">
-            <option value="상">상</option>
-            <option value="중" selected>중</option>
-            <option value="하">하</option>
-          </select>
-        </div>
-      </div>
+        <div class="todo-dates">
+          <div class="field-group">
+            <label for="start-date-input">시작일</label>
+            <input type="date" id="start-date-input" class="start-date-input" />
+          </div>
 
-      <div class="todo-dates">
-        <div class="field-group">
-          <label for="start-date-input">시작일</label>
-          <input type="date" id="start-date-input" class="start-date-input" />
+          <div class="field-group">
+            <label for="due-date-input">마감일</label>
+            <input type="date" id="due-date-input" class="due-date-input" />
+          </div>
         </div>
 
-        <div class="field-group">
-          <label for="due-date-input">마감일</label>
-          <input type="date" id="due-date-input" class="due-date-input" />
+        <button type="submit" class="add-btn">추가</button>
+      </form>
+
+      <section class="progress-section" aria-label="전체 완료율">
+        <div class="progress-info">
+          <span>전체 완료율</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-track">
+          <div id="progress-bar-fill" class="progress-bar-fill"></div>
+        </div>
+        <p id="progress-count" class="progress-count">완료 0 / 전체 0</p>
+      </section>
+
+      <ul id="todo-list" class="todo-list">
+        <!-- 할 일 항목이 여기에 자바스크립트로 추가됩니다 -->
+      </ul>
+
+      <p id="empty-message" class="empty-message">아직 등록된 할 일이 없습니다.</p>
+    </div>
+
+    <aside class="calendar-panel" aria-label="월간 달력">
+      <div class="calendar-header">
+        <button type="button" id="calendar-prev-btn" class="calendar-nav-btn" aria-label="이전 달">
+          &lt;
+        </button>
+        <h2 id="calendar-title" class="calendar-title"></h2>
+        <button type="button" id="calendar-next-btn" class="calendar-nav-btn" aria-label="다음 달">
+          &gt;
+        </button>
+      </div>
+
+      <div class="calendar-weekdays">
+        <span class="weekday-sun">일</span>
+        <span>월</span>
+        <span>화</span>
+        <span>수</span>
+        <span>목</span>
+        <span>금</span>
+        <span class="weekday-sat">토</span>
+      </div>
+
+      <div id="calendar-grid" class="calendar-grid">
+        <!-- 날짜 셀이 여기에 자바스크립트로 추가됩니다 -->
+      </div>
+
+      <div class="calendar-legend">
+        <span class="legend-item"><span class="legend-dot legend-dot-start"></span>시작일</span>
+        <span class="legend-item"><span class="legend-dot legend-dot-due"></span>마감일</span>
+        <span class="legend-item"><span class="legend-swatch legend-swatch-holiday"></span>공휴일/주말</span>
+      </div>
+
+      <div id="calendar-selected-info" class="calendar-selected-info"></div>
+    </aside>
+  </div>
+  </div>
+
+  <div id="memo-view" class="view memo-view hidden">
+    <div class="memo-panel">
+      <header class="memo-header">
+        <h1>일정별 메모</h1>
+        <p class="subtitle">할 일을 선택하고 자유롭게 메모를 남겨보세요</p>
+      </header>
+
+      <div class="memo-body">
+        <aside class="memo-list-panel" aria-label="전체 메모 목록">
+          <h2 class="memo-list-title">전체 일정</h2>
+          <ul id="memo-todo-list" class="memo-todo-list">
+            <!-- 할 일 목록이 여기에 자바스크립트로 추가됩니다 -->
+          </ul>
+          <p id="memo-list-empty" class="memo-list-empty">등록된 할 일이 없습니다.</p>
+        </aside>
+
+        <section class="memo-editor-panel" aria-label="메모 작성">
+          <div class="memo-todo-display">
+            <p id="memo-todo-title" class="memo-todo-title">일정을 선택해주세요</p>
+            <div id="memo-todo-meta" class="memo-todo-meta"></div>
+          </div>
+
+          <div class="memo-editor-section">
+            <label for="memo-textarea" class="memo-editor-label">메모</label>
+            <textarea
+              id="memo-textarea"
+              class="memo-textarea"
+              placeholder="이 일정에 대한 메모를 입력하세요"
+              disabled
+            ></textarea>
+            <p id="memo-save-status" class="memo-save-status"></p>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <div id="timetable-view" class="view timetable-view hidden">
+    <div class="timetable-panel">
+      <header class="timetable-header">
+        <h1>시간표</h1>
+        <p class="subtitle">칸을 클릭해서 수업이나 일정을 입력하세요 (월~금, 1시간 단위)</p>
+      </header>
+
+      <div class="timetable-scroll">
+        <table id="timetable-grid" class="timetable-grid">
+          <!-- 시간표 표 전체(머리글 행 + 시간별 행)가 여기에 자바스크립트로 추가됩니다 -->
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 시간표 칸 클릭 시 나타나는 입력 팝업 -->
+  <div id="timetable-popup-overlay" class="timetable-popup-overlay hidden">
+    <div class="timetable-popup">
+      <h3 id="timetable-popup-title" class="timetable-popup-title">일정 입력</h3>
+      <div class="field-group">
+        <label for="timetable-popup-subject">과목/일정명</label>
+        <input
+          type="text"
+          id="timetable-popup-subject"
+          class="timetable-popup-subject"
+          placeholder="예: 자료구조론"
+          autocomplete="off"
+        />
+      </div>
+      <div class="field-group">
+        <label for="timetable-popup-location">장소 (선택)</label>
+        <input
+          type="text"
+          id="timetable-popup-location"
+          class="timetable-popup-location"
+          placeholder="예: 공학관 301호"
+          autocomplete="off"
+        />
+      </div>
+      <div class="timetable-popup-actions">
+        <button type="button" id="timetable-popup-delete-btn" class="timetable-popup-delete-btn">삭제</button>
+        <div class="timetable-popup-actions-right">
+          <button type="button" id="timetable-popup-cancel-btn" class="timetable-popup-cancel-btn">취소</button>
+          <button type="button" id="timetable-popup-save-btn" class="timetable-popup-save-btn">저장</button>
         </div>
       </div>
-
-      <button type="submit" class="add-btn">추가</button>
-    </form>
-
-    <section class="progress-section" aria-label="전체 완료율">
-      <div class="progress-info">
-        <span>전체 완료율</span>
-        <span id="progress-percent">0%</span>
-      </div>
-      <div class="progress-bar-track">
-        <div id="progress-bar-fill" class="progress-bar-fill"></div>
-      </div>
-      <p id="progress-count" class="progress-count">완료 0 / 전체 0</p>
-    </section>
-
-    <ul id="todo-list" class="todo-list">
-      <!-- 할 일 항목이 여기에 자바스크립트로 추가됩니다 -->
-    </ul>
-
-    <p id="empty-message" class="empty-message">아직 등록된 할 일이 없습니다.</p>
+    </div>
   </div>
 
   <script src="script.js"></script>
