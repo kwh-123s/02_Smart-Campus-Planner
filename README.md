@@ -106,7 +106,7 @@
 
 > 아래 영역에 GitHub Pages로 배포한 뒤 생성되는 실제 URL을 붙여넣어 주세요.
 
-- **배포 URL**: `여기에 GitHub Pages 링크를 입력하세요`
+- **배포 URL**: https://kwh-123s.github.io/02_Smart-Campus-Planner/
 - 예시 형식: `https://<GitHub 계정 이름>.github.io/<저장소 이름>/`
 
 ---
